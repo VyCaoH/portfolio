@@ -1,142 +1,224 @@
 import { useRef } from "react";
+import Head from "next/head";
+import Link from "next/link";
+import SequentialTypewriter from "../components/SequentialTypewriter";
+
+// Components
 import Header from "../components/Header";
 import ServiceCard from "../components/ServiceCard";
 import Socials from "../components/Socials";
 import WorkCard from "../components/WorkCard";
-import { useIsomorphicLayoutEffect } from "../utils";
-import { stagger } from "../animations";
 import Footer from "../components/Footer";
-import Head from "next/head";
 import Button from "../components/Button";
-import Link from "next/link";
 import Cursor from "../components/Cursor";
 
-// Local Data
+// Utilities
+import { useIsomorphicLayoutEffect } from "../utils";
+import { stagger } from "../animations";
+
+// Data
 import data from "../data/portfolio.json";
 
 export default function Home() {
-  // Ref
-  const workRef = useRef();
-  const aboutRef = useRef();
-  const textOne = useRef();
-  const textTwo = useRef();
-  const textThree = useRef();
-  const textFour = useRef();
+  const workRef = useRef(null);
+  const aboutRef = useRef(null);
+ 
 
-  // Handling Scroll
-  const handleWorkScroll = () => {
+  const scrollTo = (ref) => {
     window.scrollTo({
-      top: workRef.current.offsetTop,
+      top: ref.current.offsetTop,
       left: 0,
       behavior: "smooth",
     });
   };
-
-  const handleAboutScroll = () => {
-    window.scrollTo({
-      top: aboutRef.current.offsetTop,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
-  useIsomorphicLayoutEffect(() => {
-    stagger(
-      [textOne.current, textTwo.current, textThree.current, textFour.current],
-      { y: 40, x: -10, transform: "scale(0.95) skew(10deg)" },
-      { y: 0, x: 0, transform: "scale(1)" }
-    );
-  }, []);
 
   return (
-    <div className={`relative ${data.showCursor && "cursor-none"}`}>
+    <div className={`relative ${data.showCursor ? "cursor-none" : ""}`}>
       {data.showCursor && <Cursor />}
+
       <Head>
         <title>{data.name}</title>
       </Head>
 
+      {/* Background Gradients */}
       <div className="gradient-circle"></div>
       <div className="gradient-circle-bottom"></div>
 
-      <div className="container mx-auto mb-10">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <Header
-          handleWorkScroll={handleWorkScroll}
-          handleAboutScroll={handleAboutScroll}
+          handleWorkScroll={() => scrollTo(workRef)}
+          handleAboutScroll={() => scrollTo(aboutRef)}
         />
-        <div className="laptop:mt-20 mt-10">
-          <div className="mt-5">
-            <h1
-              ref={textOne}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-4/5 mob:w-full laptop:w-4/5"
-            >
-              {data.headerTaglineOne}
-            </h1>
-            <h1
-              ref={textTwo}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineTwo}
-            </h1>
-            <h1
-              ref={textThree}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineThree}
-            </h1>
-            <h1
-              ref={textFour}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineFour}
-            </h1>
-          </div>
 
-          <Socials className="mt-2 laptop:mt-5" />
-        </div>
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
-          <h1 className="text-2xl text-bold">Work.</h1>
+        {/* Hero Section */}
+       {/* Hero Section */}
+<section className="mt-16 lg:mt-24 px-4 sm:px-8 lg:px-24">
+  <SequentialTypewriter
+    lines={[
+      data.headerTaglineOne,
+      data.headerTaglineTwo,
+      data.headerTaglineThree,
+      data.headerTaglineFour
+    ]}
+    classNameMap={[
+      "text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text dark:from-purple-300 dark:via-fuchsia-400 dark:to-indigo-400",
+      "text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text dark:from-purple-300 dark:via-fuchsia-400 dark:to-indigo-400",
+      "text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text dark:from-purple-300 dark:via-fuchsia-400 dark:to-indigo-400",
+      "text-2xl sm:text-3xl text-gray-700 dark:text-gray-300 font-medium mt-4"
+    ]}
+    speed={50}
+    delayBetween={1000}
+  />
 
-          <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
-            {data.projects.map((project) => (
-              <WorkCard
-                key={project.id}
-                img={project.imageSrc}
-                name={project.title}
-                description={project.description}
-                onClick={() => window.open(project.url)}
-              />
-            ))}
-          </div>
-        </div>
+  <Socials className="mt-8" />
+</section>
 
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0">
-          <h1 className="tablet:m-10 text-2xl text-bold">Services.</h1>
-          <div className="mt-5 tablet:m-10 grid grid-cols-1 laptop:grid-cols-2 gap-6">
-            {data.services.map((service, index) => (
-              <ServiceCard
-                key={index}
-                name={service.title}
-                description={service.description}
-              />
-            ))}
-          </div>
-        </div>
-        {/* This button should not go into production */}
-        {process.env.NODE_ENV === "development" && (
-          <div className="fixed bottom-5 right-5">
-            <Link href="/edit">
-              <Button type="primary">Edit Data</Button>
-            </Link>
-          </div>
-        )}
-        <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">About.</h1>
-          <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
-            {data.aboutpara}
-          </p>
-        </div>
-        <Footer />
+
+
+<section ref={workRef} className="mt-24 px-4 sm:px-6 lg:px-8">
+  <div className="max-w-full">
+    <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-sky-400 mb-2">
+      Selected Projects
+    </h2>
+    <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
+      A curated selection of works exploring AI, UX, and intelligent systems.
+    </p>
+
+    {/* Scrollable Projects */}
+    <div className="flex overflow-x-auto gap-6 pb-2 scroll-smooth mask-gradient">
+      {data.projects.map((project) => (
+       <a
+       key={project.id}
+       href={project.url}
+       target="_blank"
+       rel="noopener noreferrer"
+       className="relative bg-white dark:bg-slate-800 p-6 rounded-xl border border-gray-200 dark:border-slate-700 
+                  transition-all duration-300 transform hover:scale-[1.03] hover:shadow-xl 
+                  hover:border-sky-400 hover:bg-sky-50 dark:hover:bg-slate-700 cursor-pointer 
+                  min-w-[280px] max-w-[320px] flex-shrink-0 group"
+     >
+       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-sky-100 via-white to-transparent opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+     
+       <div className="w-full aspect-square mb-4 overflow-hidden rounded-xl border border-gray-100">
+         <img
+           src={project.imageSrc}
+           alt={project.title}
+           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+         />
+       </div>
+     
+       <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 transition-colors duration-300 group-hover:text-sky-700 dark:group-hover:text-sky-300">
+         {project.title}
+       </h3>
+     
+       <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 transition-colors duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-300">
+         {project.description}
+       </p>
+     </a>
+     
+      ))}
+    </div>
+
+  </div>
+</section>
+
+ {/* HONORS & AWARDS */}
+<section className="mt-24">
+  <h2 className="text-3xl font-bold text-gray-900 dark:text-sky-400 mb-8">
+    Honor and Awards
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {data.awards.map((award, index) => (
+      <div
+        key={index}
+        className="relative flex flex-col gap-4 p-6 bg-white dark:bg-slate-800 border border-red-100 dark:border-red-700 
+                   rounded-xl shadow-sm transition-all duration-300 hover:shadow-xl hover:border-red-400 hover:bg-red-50 
+                   dark:hover:bg-slate-700 hover:-translate-y-1 group pl-5"
+      >
+        <div className="absolute left-0 top-6 h-10 w-1 bg-red-500 rounded-r-md" />
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white leading-snug group-hover:text-red-700 dark:group-hover:text-red-300 transition-colors duration-300">
+          {award.title}
+        </h3>
+        <div className="w-10 h-1 bg-red-400 rounded-md my-2" />
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
+          {award.description}
+        </p>
       </div>
+    ))}
+  </div>
+</section>
+
+{/* EXPERIENCES */}
+<section className="mt-24">
+  <h2 className="text-3xl font-bold text-gray-900 dark:text-amber-400 mb-8">
+    Experiences
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {data.services.map((service, index) => (
+      <div
+        key={index}
+        className="relative flex flex-col gap-4 p-6 bg-white dark:bg-slate-800 border border-amber-100 dark:border-amber-700 
+                   rounded-xl shadow-sm transition-all duration-300 hover:shadow-xl hover:border-amber-400 hover:bg-amber-50 
+                   dark:hover:bg-slate-700 hover:-translate-y-1 group pl-5"
+      >
+        <div className="absolute left-0 top-6 h-10 w-1 bg-amber-400 rounded-r-md" />
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white leading-snug group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors duration-300">
+          {service.title}
+        </h3>
+        <div className="w-10 h-1 bg-amber-400 rounded-md my-2" />
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
+          {service.description}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+{/* EXTRACURRICULARS */}
+<section className="mt-24">
+  <h2 className="text-3xl font-bold text-gray-900 dark:text-sky-400 mb-8">
+    Extracurriculars
+  </h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {data.leadership.map((item, index) => (
+      <div
+        key={index}
+        className="relative flex flex-col gap-4 p-6 bg-white dark:bg-slate-800 border border-sky-100 dark:border-sky-700 
+                   rounded-xl shadow-sm transition-all duration-300 hover:shadow-xl hover:border-sky-400 hover:bg-sky-50 
+                   dark:hover:bg-slate-700 hover:-translate-y-1 group pl-5"
+      >
+        <div className="absolute left-0 top-6 h-10 w-1 bg-sky-400 rounded-r-md" />
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white leading-snug group-hover:text-sky-700 dark:group-hover:text-sky-300 transition-colors duration-300">
+          {item.title}
+        </h3>
+        <div className="w-10 h-1 bg-sky-400 rounded-md my-2" />
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors duration-300">
+          {item.description}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
+<section ref={aboutRef} className="mt-24 relative">
+  <div className="absolute left-0 top-3 h-8 w-1 bg-gradient-to-b from-sky-400 to-indigo-500 rounded-r" />
+
+  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 pl-4">
+    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text">
+      About me
+    </span>
+  </h2>
+
+  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl pl-4 transition-all duration-500 animate-fade-in">
+    {data.aboutpara}
+  </p>
+</section>
+
+
+        <Footer className="mt-20" />
+      </main>
     </div>
   );
 }

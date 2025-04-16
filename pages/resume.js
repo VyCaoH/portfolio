@@ -40,7 +40,7 @@ const Resume = () => {
               {/* Download Button */}
               <div className="text-center mb-6">
                 <a
-                  href="/CaoHoaiYenVy_resume.pdf"
+                  href="/CaoHoaiYenVy_Resume.pdf"
                   download
                   className="inline-block px-5 py-2 bg-sky-600 text-white rounded-md shadow hover:bg-sky-700 transition"
                 >
@@ -51,7 +51,7 @@ const Resume = () => {
               {/* PDF Viewer */}
               <div className="w-full h-[750px] border rounded-md overflow-hidden">
                 <iframe
-                  src="/CaoHoaiYenVy_resume.pdf"
+                  src="/CaoHoaiYenVy_Resume.pdf"
                   width="100%"
                   height="100%"
                   className="w-full h-full"

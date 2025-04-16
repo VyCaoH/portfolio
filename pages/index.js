@@ -73,7 +73,19 @@ export default function Home() {
   <Socials className="mt-8" />
 </section>
 
+<section ref={aboutRef} className="mt-24 relative">
+  <div className="absolute left-0 top-3 h-8 w-1 bg-gradient-to-b from-sky-400 to-indigo-500 rounded-r" />
 
+  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 pl-4">
+    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text">
+      About me
+    </span>
+  </h2>
+
+  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl pl-4 transition-all duration-500 animate-fade-in">
+    {data.aboutpara}
+  </p>
+</section>
 
 <section ref={workRef} className="mt-24 px-4 sm:px-6 lg:px-8">
   <div className="max-w-full">
@@ -202,19 +214,7 @@ export default function Home() {
 
 
 
-<section ref={aboutRef} className="mt-24 relative">
-  <div className="absolute left-0 top-3 h-8 w-1 bg-gradient-to-b from-sky-400 to-indigo-500 rounded-r" />
 
-  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 pl-4">
-    <span className="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-600 text-transparent bg-clip-text">
-      About me
-    </span>
-  </h2>
-
-  <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl pl-4 transition-all duration-500 animate-fade-in">
-    {data.aboutpara}
-  </p>
-</section>
 
 
         <Footer className="mt-20" />

@@ -44,7 +44,7 @@ const Resume = () => {
                   download
                   className="inline-block px-5 py-2 bg-sky-600 text-white rounded-md shadow hover:bg-sky-700 transition"
                 >
-                  Download CV
+                  Download Resume
                 </a>
               </div>
 

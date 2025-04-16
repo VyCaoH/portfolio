@@ -23,7 +23,7 @@ const ProjectResume = ({ dates, type, position, bullets }) => {
         {/* Embedded PDF */}
         <div className="w-full h-[700px] border shadow rounded-lg overflow-hidden">
           <iframe
-            src="/cv.pdf"
+            src="/CaoHoaiYenVy_Resume.pdf"
             width="100%"
             height="100%"
             title="Vy Cao's Resume"
